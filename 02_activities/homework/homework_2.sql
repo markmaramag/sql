@@ -70,6 +70,19 @@ FROM product;
 add a column to the previous query called pepper_flag that outputs a 1 if the product_name 
 contains the word “pepper” (regardless of capitalization), and otherwise outputs 0. */
 
+SELECT product_id, product_name,
+-- Check if the product quantity type is 'unit'. If it is 'unit', show 'unit', otherwise show 'bulk'
+       CASE 
+           WHEN product_qty_type = 'unit' THEN 'unit'
+           ELSE 'bulk'
+       END AS prod_qty_type_condensed,
+-- Flag pepper products: if the product_name contains 'pepper', output 1, otherwise 0
+       CASE 
+           WHEN LOWER(product_name) LIKE '%pepper%' THEN 1
+           ELSE 0
+       END AS pepper_flag
+FROM product;
+
 
 --JOIN
 /* 1. Write a query that INNER JOINs the vendor table to the vendor_booth_assignments table on the 
