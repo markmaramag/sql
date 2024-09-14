@@ -15,12 +15,14 @@ LIMIT 10;
 --WHERE
 /* 1. Write a query that returns all customer purchases of product IDs 4 and 9. */
 -- option 1
+
 SELECT * 
 FROM customer_purchases
 WHERE product_id = 4
 OR product_id = 9;
 
 -- option 2
+
 SELECT * 
 FROM customer_purchases
 WHERE product_id IN (4,9);
@@ -32,16 +34,22 @@ filtered by vendor IDs between 8 and 10 (inclusive) using either:
 	2.  one condition using BETWEEN
 */
 -- option 1
-SELECT *
-,(quantity * cost_to_customer_per_qty) AS price
+
+SELECT *, 
+-- Calculate the total price by multiplying quantity and cost per unit
+   (quantity * cost_to_customer_per_qty) AS price
 FROM customer_purchases
+-- Only show rows where the vendor_id is greater than or equal to 8 and less than or equal to 10
 WHERE vendor_id >= 8
   AND vendor_id <= 10;
 
 -- option 2
-SELECT *
-,(quantity * cost_to_customer_per_qty) AS price
+
+SELECT *, 
+-- Calculate the total price by multiplying quantity and cost per unit
+   (quantity * cost_to_customer_per_qty) AS price
 FROM customer_purchases
+-- Only show rows where the vendor_id is between 8 and 10 (including 8 and 10)
 WHERE vendor_id BETWEEN 8 AND 10;
 
 --CASE
@@ -50,6 +58,13 @@ Using the product table, write a query that outputs the product_id and product_n
 columns and add a column called prod_qty_type_condensed that displays the word “unit” 
 if the product_qty_type is “unit,” and otherwise displays the word “bulk.” */
 
+SELECT product_id, product_name,
+-- Check if the product quantity type is 'unit' if it is 'unit', show 'unit', otherwise show 'bulk'
+   CASE 
+	WHEN product_qty_type = 'unit' THEN 'unit'
+	ELSE 'bulk'
+   END AS prod_qty_type_condensed
+FROM product;
 
 /* 2. We want to flag all of the different types of pepper products that are sold at the market. 
 add a column to the previous query called pepper_flag that outputs a 1 if the product_name 
