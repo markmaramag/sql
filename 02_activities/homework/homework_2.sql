@@ -87,3 +87,15 @@ FROM product;
 --JOIN
 /* 1. Write a query that INNER JOINs the vendor table to the vendor_booth_assignments table on the 
 vendor_id field they both have in common, and sorts the result by vendor_name, then market_date. */
+
+SELECT *
+FROM vendor
+
+-- Join the vendor table with vendor_booth_assignments table
+INNER JOIN vendor_booth_assignments
+
+-- Match rows where the vendor_id in both tables is the same
+ON vendor.vendor_id = vendor_booth_assignments.vendor_id
+
+-- Sort the result by vendor_name first, then by market_date
+ORDER BY vendor.vendor_name, vendor_booth_assignments.market_date;
