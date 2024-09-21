@@ -103,7 +103,14 @@ WHERE
 
 /* 2. Filter the query to show any product_size value that contain a number with REGEXP. */
 
-
+SELECT 
+    product_name,
+    TRIM(SUBSTR(product_name, INSTR(product_name, '-') + 1)) AS description
+FROM 
+    product
+WHERE 
+    INSTR(product_name, '-') > 0 
+    AND product_size REGEXP '[0-9]';
 
 -- UNION
 /* 1. Using a UNION, write a query that displays the market dates with the highest and lowest total sales.
@@ -115,6 +122,43 @@ HINT: There are a possibly a few ways to do this query, but if you're struggling
 3) Query the second temp table twice, once for the best day, once for the worst day, 
 with a UNION binding them. */
 
+WITH sales_by_date AS (
+    SELECT 
+        market_date, 
+        SUM(quantity * cost_to_customer_per_qty) AS total_sales
+    FROM 
+        customer_purchases
+    GROUP BY 
+        market_date
+),
+ranked_sales AS (
+    SELECT 
+        market_date, 
+        total_sales,
+        RANK() OVER (ORDER BY total_sales DESC) AS highest_sales_rank,
+        RANK() OVER (ORDER BY total_sales ASC) AS lowest_sales_rank
+    FROM 
+        sales_by_date
+)
+SELECT 
+    market_date, 
+    total_sales, 
+    'Best Day' AS sales_type
+FROM 
+    ranked_sales
+WHERE 
+    highest_sales_rank = 1
+
+UNION
+
+SELECT 
+    market_date, 
+    total_sales, 
+    'Worst Day' AS sales_type
+FROM 
+    ranked_sales
+WHERE 
+    lowest_sales_rank = 1;
 
 
 
