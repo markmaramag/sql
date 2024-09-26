@@ -28,9 +28,14 @@ In a Type 2 slowly changing dimensions, a new record will always be created. The
 Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
-```
-Your answer...
-```
+
+The AdventureWorks schema is very detailed and useful for a large organization like theirs. The ERD I made is just for a small book store who have a small number of staff, less complex processes, and just sells one type of product - books.
+
+One difference that I see on their schema and my ERD is they have a more complicated sales process. They have several stores, sales people for B2B and B2C, process transactions in different currencies. In my small bookstore, we only have one branch, no dedicated sales people, and just sell to retail customers.
+
+Another difference is with their Product table have a lot more columns which have data for different references keys (i.e. product number, ProductSubcategoryID, ProductModelID) that are used for different tables and processes. This emphasizes that they have lots of products and have to manage a lot of information. It looks like they also have a website to which their list the product descriptions, add photos and illustrations, and manage reviews. The ERD that I made is only for a small brick and mortar bookstore that only sells one type of product - books. 
+
+After looking at the schema of AdventureWorks, tt would probably a good idea to add an HR department on my ERD too so that there would be tables for employee's salary, hiring staff, and employment history. I can add there the employee and shifts tables that I currently have.
 
 # Criteria
 
