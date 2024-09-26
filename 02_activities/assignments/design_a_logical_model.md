@@ -19,7 +19,9 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+For an architecture where the customer_address table overwrites changes, the customer's address is updated whenever a change is made. There won't be a way to keep track of changes over time. This is known as the Type 1 Slowly Changing Dimension. The changes to customer addresses are overwritten and only the most recent address remains.  This also simplifies data storage by keeping only the current information. This can be used when historical accuracy isn’t important. For example, if a store wants to ship a package to a customer, they only need the customer's current address to know where they'll send the package.
+
+In a Type 2 slowly changing dimensions, a new record will always be created. The historical records are preserved by adding a new row for each change in the customer's address. This allows tracking address history changes but results in larger table sizes as records accumulate. This method is useful for maintaining an accurate history of address changes but it may introduce privacy concerns since it retains potentially sensitive addresses in the system. One way to mitigate this is by implementing retention policies that comply with privacy laws which might require deleting customer addresses after a certain period.
 ```
 
 ## Question 4
